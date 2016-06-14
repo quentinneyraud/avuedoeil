@@ -1,0 +1,53 @@
+@import '../mixins';
+@import '../variables';
+
+.social {
+  background: url('../assets/img/metro_bg.png') no-repeat;
+  background-size: cover;
+
+  &__infos {
+    position: relative;
+    display: block;
+    height: 30vh;
+  }
+
+  &__message {
+    @include place(60%, 50%);
+    display: inline-block;
+    width: 70%;
+    color: $blue;
+    font-size: $fsz-title;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  &__separator {
+    @include place(75%, 50%);
+    width: 40%;
+    height: 2px;
+    background-color: $blue;
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 60vh;
+  }
+
+  &__item {
+    align-self: center;
+    &__img {
+      display: block;
+      margin: 0 auto;
+    }
+    &__title {
+      color: $blue;
+      text-align: center;
+      font-size: $fsz-text;
+      padding-top: 15px;
+    }
+  }
+}
+
+

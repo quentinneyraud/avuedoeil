@@ -1,0 +1,42 @@
+import debug from 'debug'
+
+const dbg = debug('avuedoeil:canvas')
+
+export default class Canvas {
+
+  constructor () {
+    dbg('Init canvas')
+    this.context = null
+    this.canvas = null
+  }
+
+  createCanvas (videoDimensions) {
+    dbg('create canvas')
+
+    let { width, height } = videoDimensions
+    this.canvas = document.createElement('canvas')
+
+    this.canvas.width = width
+    this.canvas.height = height
+    this.canvas.width = this.nextPowerOf2(width)
+    this.canvas.height = this.nextPowerOf2(height)
+
+    this.context = this.canvas.getContext('2d')
+  }
+
+  nextPowerOf2 (x) {
+    return Math.pow(2, Math.ceil(Math.log(x) / Math.log(2)))
+  }
+
+  draw (video) {
+    // this.context.drawImage(video, 0, 0, this.canvas.width, this.canvas.width)
+    this.context.beginPath()
+    this.context.arc(this.canvas.width / 2, this.canvas.height / 2, 70, 0, 2 * Math.PI, false)
+    this.context.fillStyle = 'green'
+    this.context.fill()
+    this.context.lineWidth = 5
+    this.context.strokeStyle = '#003300'
+    this.context.stroke()
+  }
+
+}

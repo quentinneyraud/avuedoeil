@@ -1,0 +1,44 @@
+@import '../mixins';
+@import '../variables';
+
+.splashscreen{
+  background: url('../assets/img/metro_bg.png') no-repeat;
+  background-size: cover;
+
+  &__logo{
+    @include center();
+  }
+
+  &__loader{
+    @include place(70%, 50%);
+    background-color: rgba(0, 255, 216, 0.2);
+    height: 2px;
+    width: 50%;
+    overflow: hidden;
+    &__loaded{
+      height: inherit;
+      width: 0;
+      background-color: $blue;
+    }
+  }
+
+  &__title, &__subtitle{
+    color: $blue;
+    text-transform: uppercase;
+  }
+
+  &__title{
+    @include place(75%, 50%);
+    font-size: 40px;
+    white-space: nowrap;
+    font-weight: bold;
+  }
+
+  &__subtitle{
+    @include place(80%, 50%);
+    white-space: nowrap;
+    font-size: $fsz-title;
+  }
+}
+
+

@@ -1,0 +1,21 @@
+@import "./lib/resetMeyer";
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  transform-origin: 50% 50%;
+}
+
+a,
+a:visited,
+a:link,
+a:hover,
+a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
