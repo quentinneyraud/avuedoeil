@@ -16,11 +16,11 @@ export default class Vr {
     Raf.polyfill()
 
     // Create Elements
+    this.three = new Three()
     this.video = new Video()
     this.canvas = new Canvas()
     // this.vrLayer = new VrLayer()
     // this.experienceManager = new ExperienceManager(this.vrLayer)
-    this.three = new Three()
 
     this.listenVideoFeed()
   }
@@ -32,7 +32,7 @@ export default class Vr {
       return false
     }
 
-    this.video.getSourceId()
+    // this.video.getSourceId()
     this.video.getStream()
       .then(() => {
         this.canvas.createCanvas(this.video.getVideoDimensions())

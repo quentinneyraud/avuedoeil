@@ -18,8 +18,9 @@ export default class Canvas {
 
     this.canvas.width = width
     this.canvas.height = height
-    this.canvas.width = this.nextPowerOf2(width)
-    this.canvas.height = this.nextPowerOf2(height)
+    this.canvas.width = this.nextPowerOf2(this.canvas.width)
+    this.canvas.height = this.nextPowerOf2(this.canvas.height)
+    // document.getElementById('webglviewer').appendChild(this.canvas)
 
     this.context = this.canvas.getContext('2d')
   }
@@ -29,9 +30,13 @@ export default class Canvas {
   }
 
   draw (video) {
-    // this.context.drawImage(video, 0, 0, this.canvas.width, this.canvas.width)
+    this.context.drawImage(video, 0, 0, this.canvas.width, this.canvas.width)
+    let centerX = this.canvas.width / 2
+    let centerY = this.canvas.height / 2
+    let radius = 70
+
     this.context.beginPath()
-    this.context.arc(this.canvas.width / 2, this.canvas.height / 2, 70, 0, 2 * Math.PI, false)
+    this.context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false)
     this.context.fillStyle = 'green'
     this.context.fill()
     this.context.lineWidth = 5

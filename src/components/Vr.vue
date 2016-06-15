@@ -17,7 +17,9 @@
 <script>
   import THREE from 'three'
   import '../assets/js/lib/StereoEffect'
-  import Vr from '../assets/js/Vr/index'
+//  import Vr from '../assets/js/Vr/index'
+  import VrLayer from '../assets/js/Vr/VrLayer'
+  import ExperienceManager from '../assets/js/Experiences/ExperienceManager'
 
   export default{
     data () {
@@ -26,10 +28,10 @@
       }
     },
     ready () {
-      let vr = new Vr()
-      console.log(vr)
+//      let vr = new Vr()
+//      console.log(vr)
 
-      if (1) {
+      if (0) {
         return false
       }
       var scene
@@ -42,6 +44,8 @@
       var canvas
       var context
       var texture
+      var vrLayer
+      var experienceManager
 
       init()
 
@@ -105,6 +109,10 @@
           }))
           cameraMesh.position.z = -600
           scene.add(cameraMesh)
+
+          vrLayer = new VrLayer(canvas.width, canvas.height)
+          experienceManager = new ExperienceManager(vrLayer)
+          console.log(experienceManager)
           animate()
         }
 
@@ -116,6 +124,8 @@
       function animate () {
         if (context) {
           context.drawImage(video, 0, 0, canvas.width, canvas.height)
+          vrLayer.stage.update()
+          context.drawImage(vrLayer.canvas, 0, 0, canvas.width, canvas.height)
 
           if (video.readyState === video.HAVE_ENOUGH_DATA) {
             texture.needsUpdate = true

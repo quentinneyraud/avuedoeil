@@ -45,11 +45,11 @@ export default class Three {
   createCameraMesh (Canvas) {
     dbg('createCameraMesh')
 
-    let texture = new THREE.Texture(Canvas.canvas)
+    let texture = new THREE.Texture()
     texture.context = Canvas.context
-    let cameraPlane = new THREE.PlaneBufferGeometry(1920, 1280)
+    let cameraPlane = new THREE.PlaneBufferGeometry(1920, 1080)
 
-    let cameraMesh = new THREE.Mesh(cameraPlane, new THREE.MeshBasicMaterial({
+    var cameraMesh = new THREE.Mesh(cameraPlane, new THREE.MeshBasicMaterial({
       color: 0xffffff,
       opacity: 1,
       map: texture
@@ -65,10 +65,10 @@ export default class Three {
     let height = this.$els.container.offsetHeight
 
     this.camera.aspect = width / height
-    this.renderer.setSize(width, height)
-
-    this.effect.setSize(width, height)
     this.camera.updateProjectionMatrix()
+
+    this.renderer.setSize(width, height)
+    this.effect.setSize(width, height)
     this.effect.render(this.scene, this.camera)
   }
 }

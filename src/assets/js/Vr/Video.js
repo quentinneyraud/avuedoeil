@@ -32,8 +32,12 @@ export default class Video {
   isBrowserSupport () {
     dbg('isBrowserSupport')
 
-    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
-    return (navigator.mediaDevices || navigator.mediaDevices.enumerateDevices) && navigator.getUserMedia
+    navigator.getUserMedia = (navigator.getUserMedia ||
+       navigator.webkitGetUserMedia ||
+       navigator.mozGetUserMedia ||
+       navigator.msGetUserMedia)
+
+    return true
   }
 
   getVideoDimensions () {

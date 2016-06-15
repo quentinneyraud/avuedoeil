@@ -4,35 +4,51 @@ import EaselJS from 'createjs-collection'
 const dbg = debug('avuedoeil:vrLayer')
 
 export default class VrLayer {
-  constructor () {
+  constructor (width, height) {
     dbg('Init Vrlayer')
 
     this.canvas = null
     this.xCenter = null
     this.yCenter = null
+    this.pointer = null
 
-    this.createCanvas()
+    this.createCanvas(width, height)
     this.stage = new EaselJS.Stage(this.canvas)
 
     this.createVisionEffect()
+    this.addPointer()
+  }
+
+  addPointer () {
+    dbg('addPointer')
+    this.pointer = new EaselJS.Shape()
+    let { xCenter, yCenter } = this
+
+    this.pointer.graphics
+      .setStrokeStyle(2)
+      .beginStroke('#fff')
+      .drawCircle(xCenter, yCenter, 15)
+
+    this.stage.addChild(this.pointer)
   }
 
   createButtons () {
-    dbg('create Buttons')
+    dbg('createButtons')
     let buttons = new EaselJS.Shape()
     let { xCenter, yCenter } = this
 
     buttons.graphics
       .setStrokeStyle(3)
       .beginStroke('#fff')
-      .drawRect(xCenter * 0.7, yCenter + 100, 150, 70)
-      .drawRect(xCenter * 1.2, yCenter + 100, 150, 70)
+      .drawRect(xCenter - 270, yCenter + 100, 150, 70)
+      .drawRect(xCenter + 120, yCenter + 100, 150, 70)
 
     this.stage.addChild(buttons)
   }
 
   createVisionEffect () {
     let circle = new EaselJS.Shape()
+    let { xCenter, yCenter } = this
 
     circle.graphics
       .setStrokeStyle(600)
@@ -42,16 +58,12 @@ export default class VrLayer {
     this.stage.addChild(circle)
   }
 
-  createCanvas() {
+  createCanvas (width, height) {
     this.canvas = document.createElement('canvas')
-    this.canvas.width = video.clientWidth
-    this.canvas.height = video.clientHeight
+    this.canvas.width = width
+    this.canvas.height = height
 
-    this.xCenter = 250
-    this.yCenter = 250
-  }
-
-  createStage () {
-
+    this.xCenter = width / 2
+    this.yCenter = height / 2
   }
 }

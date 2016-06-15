@@ -1,7 +1,10 @@
-import Experiences from './Experiences'
+import debug from 'debug'
 
-export default class MapExperience extends Experiences{
+const dbg = debug('avuedoeil:mapExperience')
+
+export default class MapExperience {
   constructor (vrLayer) {
+    dbg('Init Mapexperience')
     this.vrLayer = vrLayer
     this.setData()
   }
@@ -14,18 +17,19 @@ export default class MapExperience extends Experiences{
   }
 
   begin () {
-    
+    dbg('begin')
+    this.vrLayer.createButtons()
   }
 
   end () {
 
   }
 
-  showTutorial() {
+  showTutorial () {
 
   }
 
-  showQuestion() {
+  showQuestion () {
 
   }
 }
