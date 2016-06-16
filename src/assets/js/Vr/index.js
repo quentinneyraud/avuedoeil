@@ -1,9 +1,9 @@
 import debug from 'debug'
 import Video from './Video'
 import Canvas from './Canvas'
-// import Renderer from './Renderer'
-// import VrLayer from './VrLayer'
-// import ExperienceManager from '../Experiences/ExperienceManager'
+import Renderer from './Renderer'
+import VrLayer from './VrLayer'
+import ExperienceManager from '../Experiences/ExperienceManager'
 import Raf from 'raf'
 
 const dbg = debug('avuedoeil:vr')
@@ -18,7 +18,7 @@ export default class Vr {
     // Create Elements
     this.video = new Video()
     this.canvas = new Canvas()
-    // this.renderer = new Renderer()
+    this.renderer = new Renderer()
 
     this.listenVideoFeed()
   }
@@ -34,9 +34,9 @@ export default class Vr {
     this.video.getStream()
       .then(() => {
         this.canvas.createCanvas(this.video.getVideoDimensions())
-        // this.renderer.createCanvas()
-        // this.vrLayer = new VrLayer(this.canvas.width, this.canvas.height)
-        // this.experienceManager = new ExperienceManager(this.vrLayer)
+        this.renderer.createCanvas()
+        this.vrLayer = new VrLayer(this.canvas.width, this.canvas.height)
+        this.experienceManager = new ExperienceManager(this.vrLayer)
         this.animate()
       })
       .catch((err) => {
@@ -47,12 +47,12 @@ export default class Vr {
   animate () {
     if (this.canvas.context) {
       this.canvas.draw(this.video.$els.video)
-      // this.vrLayer.stage.update()
-      // this.canvas.context.drawImage(this.vrLayer.canvas, 0, 0, this.canvas.width, this.canvas.height)
+      this.vrLayer.stage.update()
+      this.canvas.context.drawImage(this.vrLayer.canvas, 0, 0, this.canvas.width, this.canvas.height)
 
       Raf(this.animate.bind(this))
 
-      // this.renderer.render(this.canvas.canvas)
+      this.renderer.render(this.canvas.canvas)
     }
   }
 }
