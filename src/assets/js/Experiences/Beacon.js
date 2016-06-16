@@ -1,7 +1,11 @@
+import debug from 'debug'
+
+const dbg = debug('avuedoeil:beacon')
+
 /* global cordova */
 export default class Beacon {
   constructor () {
-    console.log('init beacons')
+    dbg('Init beacons')
     // this.currentExperience = null
     this.delegate = null
     this.beacons = {
@@ -13,7 +17,7 @@ export default class Beacon {
   }
 
   watch () {
-    console.log('watch')
+    dbg('watch')
     this.delegate = new cordova.plugins.locationManager.Delegate()
     cordova.plugins.locationManager.setDelegate(this.delegate)
 
@@ -25,10 +29,11 @@ export default class Beacon {
   }
 
   onDataReceived (cb) {
+    dbg('data received')
     this.delegate.didRangeBeaconsInRegion = function (results) {
       // Sometimes, beacons are not detected
       if (results.beacons.length > 0) {
-        console.log(results.beacons)
+        dbg(results.beacons)
         // let sorted = results.beacons.sort((a, b) => a.accuracy < b.accuracy)
         cb(true)
       }

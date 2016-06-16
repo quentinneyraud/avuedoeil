@@ -9,12 +9,9 @@ export default class Video {
 
     this.videoOptions = {
       video: {
-        optionnal: [
-          {
-            facingMode: 'environment'
-          }
-        ]
-      }
+        optional: []
+      },
+      audio: false
     }
 
     this.initializeElements()
@@ -27,6 +24,10 @@ export default class Video {
     }
 
     this.$els.video.setAttribute('autoplay', true)
+    this.$els.video.width = window.width
+    this.$els.video.height = window.height
+    this.$els.video.style.width = '100%'
+    this.$els.video.style.height = '100%'
   }
 
   isBrowserSupport () {
@@ -49,32 +50,33 @@ export default class Video {
 
   getSourceId () {
     dbg('getSourceId')
-
-    navigator.mediaDevices.enumerateDevices()
-      .then((devices) => {
-        // Get camera from devices
-        let device = devices.filter((device) => {
-          return device.kind === 'videoinput'
-        })[0]
-        if (device) {
-          this.videoOptions.video.optionnal.push(device.deviceId)
-        } else {
-          console.log('no device detected')
-        }
-      })
+    return new Promise((resolve, reject) => {
+      navigator.mediaDevices.enumerateDevices()
+        .then((devices) => {
+          dbg('devices', devices)
+          // Get camera from devices
+          let device = devices.filter((device) => {
+            return device.kind === 'videoinput'
+          })[1]
+          if (device) {
+            this.videoOptions.video.optional.push({sourceId: device.deviceId})
+            resolve()
+          } else {
+            console.log('no device detected')
+            reject()
+          }
+        })
+    })
   }
 
   getStream () {
-    dbg('getStream')
+    dbg('getStream with constraints', this.videoOptions)
 
     return new Promise((resolve, reject) => {
       navigator.getUserMedia(this.videoOptions,
         (stream) => {
-          document.body.appendChild(this.$els.video)
+          document.getElementById('webglviewer').appendChild(this.$els.video)
           this.$els.video.src = window.URL.createObjectURL(stream)
-          this.$els.video.style.width = '100%'
-          this.$els.video.style.height = '100%'
-          this.$els.video.style.marginTop = '365px'
           this.$els.video.play()
           resolve()
         },

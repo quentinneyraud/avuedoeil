@@ -22,7 +22,7 @@ export default class Renderer {
   }
 
   render (canvas) {
-    this.canvas.left.context.drawImage(canvas, -160, -90, canvas.width, canvas.height)
-    this.canvas.right.context.drawImage(canvas, -160, -90, canvas.width, canvas.height)
+    this.canvas.left.context.drawImage(canvas, -160, -60, canvas.width, canvas.height)
+    this.canvas.right.context.drawImage(canvas, -160, -60, canvas.width, canvas.height)
   }
 }

@@ -30,17 +30,22 @@ export default class Vr {
       return false
     }
 
-    // this.video.getSourceId()
-    this.video.getStream()
+    this.video.getSourceId()
       .then(() => {
-        this.canvas.createCanvas(this.video.getVideoDimensions())
-        this.renderer.createCanvas()
-        this.vrLayer = new VrLayer(this.canvas.width, this.canvas.height)
-        this.experienceManager = new ExperienceManager(this.vrLayer)
-        this.animate()
+        this.video.getStream()
+          .then(() => {
+            this.canvas.createCanvas(this.video.getVideoDimensions())
+            this.renderer.createCanvas()
+            this.vrLayer = new VrLayer(this.canvas.width, this.canvas.height)
+            this.experienceManager = new ExperienceManager(this.vrLayer)
+            this.animate()
+          })
+          .catch((err) => {
+            dbg('getStream error', err)
+          })
       })
-      .catch((err) => {
-        dbg('getStream error', err)
+      .catch(() => {
+        dbg('Error while getting media devices')
       })
   }
 

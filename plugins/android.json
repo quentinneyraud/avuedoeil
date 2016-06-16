@@ -10,10 +10,10 @@
         "com.unarin.cordova.beacon": {
             "PACKAGE_NAME": "fr.quentinneyraud.www"
         },
-        "cordova-plugin-whitelist": {
+        "cordova-plugin-screen-orientation": {
             "PACKAGE_NAME": "fr.quentinneyraud.www"
         },
-        "cordova-plugin-screen-orientation": {
+        "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "fr.quentinneyraud.www"
         }
     },

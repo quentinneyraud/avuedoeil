@@ -3,6 +3,14 @@ import EaselJS from 'createjs-collection'
 
 const dbg = debug('avuedoeil:vrLayer')
 const SENSIBILITY = 6
+// Pointer
+const POINTER_RADIUS = 7
+// Buttons
+const BUTTON_WIDTH = 150
+const BUTTON_HEIGHT = 70
+const BUTTON_MARGE_X = 50
+const BUTTON_MARGE_Y = 80
+const BUTTON_STROKE = 3
 
 export default class VrLayer {
   constructor (width, height) {
@@ -13,8 +21,7 @@ export default class VrLayer {
     this.canvas = null
     this.xCenter = null
     this.yCenter = null
-    this.pointer = null
-    this.buttons = {}
+    this.elements = {}
 
     this.createCanvas(width, height)
     this.stage = new EaselJS.Stage(this.canvas)
@@ -29,17 +36,26 @@ export default class VrLayer {
     })
   }
 
+  createCanvas (width, height) {
+    this.canvas = document.createElement('canvas')
+    this.canvas.width = width
+    this.canvas.height = height
+
+    this.xCenter = width / 2
+    this.yCenter = height / 2
+  }
+
   addPointer () {
     dbg('addPointer')
-    this.pointer = new EaselJS.Shape()
+    this.elements.pointer = new EaselJS.Shape()
     let {xCenter, yCenter} = this
 
-    this.pointer.graphics
+    this.elements.pointer.graphics
       .setStrokeStyle(2)
       .beginStroke('#fff')
-      .drawCircle(xCenter, yCenter, 7)
+      .drawCircle(xCenter, yCenter, POINTER_RADIUS)
 
-    this.stage.addChild(this.pointer)
+    this.stage.addChild(this.elements.pointer)
   }
 
   addButtonsListener () {
@@ -48,44 +64,51 @@ export default class VrLayer {
         this.alpha = event.alpha
         this.gamma = event.gamma
       }
-      if (this.buttons.element) {
-        this.buttons.element.y = (this.gamma - event.gamma) * -SENSIBILITY
-        this.buttons.element.x = (this.alpha - event.alpha) * -SENSIBILITY
-        let pt = this.buttons.element.localToLocal(this.buttons.element.x, this.buttons.element.y, this.pointer)
-        if (this.pointer.hitTest(pt.x, pt.y)) {
-          window.alert('hit')
-        }
+      if (this.elements.buttonLeft && this.elements.buttonRight) {
+        this.elements.buttonLeft.x = (this.alpha - event.alpha) * -SENSIBILITY * 2
+        this.elements.buttonLeft.y = (this.gamma - event.gamma) * SENSIBILITY
+        this.elements.buttonRight.x = (this.alpha - event.alpha) * -SENSIBILITY * 2
+        this.elements.buttonRight.y = (this.gamma - event.gamma) * SENSIBILITY
       }
     })
   }
 
   createButtons () {
     dbg('createButtons')
-    this.buttons.element = new EaselJS.Shape()
-    this.buttons.element.alpha = 0
     let {xCenter, yCenter} = this
 
-    this.buttons.element.graphics
-      .setStrokeStyle(3)
-      .beginStroke('#FFFFFF')
-      .drawRect(xCenter - 200, yCenter + 80, 150, 70)
-      .drawRect(xCenter + 50, yCenter + 80, 150, 70)
+    // First
+    this.elements.buttonLeft = new EaselJS.Shape()
+    this.elements.buttonLeft.alpha = 0
 
-    this.stage.addChild(this.buttons.element)
-    this.stage.setChildIndex(this.buttons.element, 20)
+    this.elements.buttonLeft.graphics
+      .setStrokeStyle(BUTTON_STROKE)
+      .beginStroke('#FFFFFF')
+      .drawRect(xCenter - BUTTON_MARGE_X - BUTTON_WIDTH, yCenter + BUTTON_MARGE_Y, BUTTON_WIDTH, BUTTON_HEIGHT)
+
+    // Second
+    this.elements.buttonRight = new EaselJS.Shape()
+    this.elements.buttonRight.alpha = 0
+
+    this.elements.buttonRight.graphics
+      .setStrokeStyle(BUTTON_STROKE)
+      .beginStroke('#FFFFFF')
+      .drawRect(xCenter + BUTTON_MARGE_X, yCenter + BUTTON_MARGE_Y, BUTTON_WIDTH, BUTTON_HEIGHT)
+
+    this.stage.addChild(this.elements.buttonLeft)
+    this.stage.addChild(this.elements.buttonRight)
+
     this.addButtonsListener()
   }
 
   animateButtons () {
-    if (this.buttons.element && this.buttons.element.alpha < 1) {
-      this.buttons.element.alpha += 0.10
+    if (this.elements.buttonLeft && this.elements.buttonRight && this.elements.buttonLeft.alpha < 1 && this.elements.buttonRight.alpha < 1) {
+      this.elements.buttonLeft.alpha += 0.10
+      this.elements.buttonRight.alpha += 0.10
     }
   }
 
   detectButtons () {
-    if (this.buttons === 0) {
-      this.buttons.callback('test')
-    }
   }
 
   setListenerButtons (cb) {
@@ -97,21 +120,12 @@ export default class VrLayer {
     let {xCenter, yCenter} = this
 
     circle.graphics
-      .setStrokeStyle(320)
+      .setStrokeStyle(400)
       .beginRadialGradientStroke(['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.9)'], [0, 0.3], xCenter, yCenter, 70, xCenter, yCenter, 340)
-      .drawCircle(xCenter, yCenter, 60)
+      .drawCircle(xCenter, yCenter, 100)
 
     this.stage.addChild(circle)
     this.stage.setChildIndex(circle, this.stage.getNumChildren() - 1)
-  }
-
-  createCanvas (width, height) {
-    this.canvas = document.createElement('canvas')
-    this.canvas.width = width
-    this.canvas.height = height
-
-    this.xCenter = width / 2
-    this.yCenter = height / 2
   }
 
   showQuestion (spriteSrc, width, height, columns, lines) {

@@ -17,7 +17,6 @@
       mytransition: {
         css: false,
         enter: function (el, done) {
-          console.log('enter maps')
           done()
         }
       }

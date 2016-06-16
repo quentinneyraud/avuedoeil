@@ -33,7 +33,7 @@ export default class MapExperience {
     // this.vrLayer.showQuestion('./static/question3.png', 14035, 6970, 17, 15)
     this.vrLayer.createButtons()
     this.vrLayer.setListenerButtons((response) => {
-      console.log(response)
+      dbg(response)
     })
   }
 }
