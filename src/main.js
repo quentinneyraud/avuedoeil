@@ -6,7 +6,6 @@ import SplashscreenComponent from './components/Splashscreen.vue'
 import VrComponent from './components/Vr.vue'
 import MapsComponent from './components/Maps.vue'
 import SocialComponent from './components/Social.vue'
-import TestComponent from './components/Test.vue'
 
 Vue.use(VueRouter)
 
@@ -27,9 +26,6 @@ router.map({
   },
   '/social': {
     component: SocialComponent
-  },
-  '/test': {
-    component: TestComponent
   }
 })
 
