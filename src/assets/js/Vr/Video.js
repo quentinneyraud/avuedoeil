@@ -37,7 +37,7 @@ export default class Video {
        navigator.mozGetUserMedia ||
        navigator.msGetUserMedia)
 
-    return true
+    return navigator.getUserMedia !== null
   }
 
   getVideoDimensions () {
@@ -74,6 +74,7 @@ export default class Video {
           this.$els.video.src = window.URL.createObjectURL(stream)
           this.$els.video.style.width = '100%'
           this.$els.video.style.height = '100%'
+          this.$els.video.style.marginTop = '365px'
           this.$els.video.play()
           resolve()
         },

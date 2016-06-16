@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node build/dev-server.js",
     "build": "rm -rf www && node build/build.js",
-    "cordova": "set DEPLOY_ENV=cordova npm run build && cordova run android",
+    "cordova": "DEPLOY_ENV=cordova npm run build && cordova run android",
     "test": "",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },

@@ -8,6 +8,8 @@ export default class Canvas {
     dbg('Init canvas')
     this.context = null
     this.canvas = null
+    this.width = null
+    this.height = null
   }
 
   createCanvas (videoDimensions) {
@@ -18,30 +20,15 @@ export default class Canvas {
 
     this.canvas.width = width
     this.canvas.height = height
-    this.canvas.width = this.nextPowerOf2(this.canvas.width)
-    this.canvas.height = this.nextPowerOf2(this.canvas.height)
-    // document.getElementById('webglviewer').appendChild(this.canvas)
+    this.width = this.canvas.width
+    this.height = this.canvas.height
 
     this.context = this.canvas.getContext('2d')
-  }
-
-  nextPowerOf2 (x) {
-    return Math.pow(2, Math.ceil(Math.log(x) / Math.log(2)))
+    document.getElementById('webglviewer').appendChild(this.canvas)
   }
 
   draw (video) {
     this.context.drawImage(video, 0, 0, this.canvas.width, this.canvas.width)
-    let centerX = this.canvas.width / 2
-    let centerY = this.canvas.height / 2
-    let radius = 70
-
-    this.context.beginPath()
-    this.context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false)
-    this.context.fillStyle = 'green'
-    this.context.fill()
-    this.context.lineWidth = 5
-    this.context.strokeStyle = '#003300'
-    this.context.stroke()
   }
 
 }

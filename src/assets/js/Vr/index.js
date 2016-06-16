@@ -1,7 +1,7 @@
 import debug from 'debug'
 import Video from './Video'
 import Canvas from './Canvas'
-import Three from './Three'
+// import Renderer from './Renderer'
 // import VrLayer from './VrLayer'
 // import ExperienceManager from '../Experiences/ExperienceManager'
 import Raf from 'raf'
@@ -16,11 +16,9 @@ export default class Vr {
     Raf.polyfill()
 
     // Create Elements
-    this.three = new Three()
     this.video = new Video()
     this.canvas = new Canvas()
-    // this.vrLayer = new VrLayer()
-    // this.experienceManager = new ExperienceManager(this.vrLayer)
+    // this.renderer = new Renderer()
 
     this.listenVideoFeed()
   }
@@ -36,7 +34,9 @@ export default class Vr {
     this.video.getStream()
       .then(() => {
         this.canvas.createCanvas(this.video.getVideoDimensions())
-        this.three.createCameraMesh(this.canvas)
+        // this.renderer.createCanvas()
+        // this.vrLayer = new VrLayer(this.canvas.width, this.canvas.height)
+        // this.experienceManager = new ExperienceManager(this.vrLayer)
         this.animate()
       })
       .catch((err) => {
@@ -48,15 +48,11 @@ export default class Vr {
     if (this.canvas.context) {
       this.canvas.draw(this.video.$els.video)
       // this.vrLayer.stage.update()
-      // this.canvas.context.drawImage(this.vrLayer.canvas, 0, 0, canvas.width, canvas.height)
-
-      if (this.video.$els.video === this.video.$els.video.HAVE_ENOUGH_DATA) {
-        this.three.texture.needsUpdate = true
-      }
+      // this.canvas.context.drawImage(this.vrLayer.canvas, 0, 0, this.canvas.width, this.canvas.height)
 
       Raf(this.animate.bind(this))
 
-      this.three.update()
+      // this.renderer.render(this.canvas.canvas)
     }
   }
 }

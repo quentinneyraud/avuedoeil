@@ -17,7 +17,7 @@
 <script>
   import THREE from 'three'
   import '../assets/js/lib/StereoEffect'
-//  import Vr from '../assets/js/Vr/index'
+  import Vr from '../assets/js/Vr/index'
   import VrLayer from '../assets/js/Vr/VrLayer'
   import ExperienceManager from '../assets/js/Experiences/ExperienceManager'
 
@@ -28,10 +28,10 @@
       }
     },
     ready () {
-//      let vr = new Vr()
-//      console.log(vr)
+      let vr = new Vr()
+      console.log(vr)
 
-      if (0) {
+      if (1) {
         return false
       }
       var scene
@@ -124,7 +124,6 @@
       function animate () {
         if (context) {
           context.drawImage(video, 0, 0, canvas.width, canvas.height)
-          vrLayer.stage.update()
           context.drawImage(vrLayer.canvas, 0, 0, canvas.width, canvas.height)
 
           if (video.readyState === video.HAVE_ENOUGH_DATA) {
