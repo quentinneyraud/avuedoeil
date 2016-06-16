@@ -12,6 +12,9 @@
         },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "fr.quentinneyraud.www"
+        },
+        "cordova-plugin-screen-orientation": {
+            "PACKAGE_NAME": "fr.quentinneyraud.www"
         }
     },
     "dependent_plugins": {}

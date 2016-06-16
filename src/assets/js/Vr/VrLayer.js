@@ -2,7 +2,7 @@ import debug from 'debug'
 import EaselJS from 'createjs-collection'
 
 const dbg = debug('avuedoeil:vrLayer')
-// const SENSIBILITY = 5
+const SENSIBILITY = 6
 
 export default class VrLayer {
   constructor (width, height) {
@@ -37,7 +37,7 @@ export default class VrLayer {
     this.pointer.graphics
       .setStrokeStyle(2)
       .beginStroke('#fff')
-      .drawCircle(xCenter, yCenter, 15)
+      .drawCircle(xCenter, yCenter, 7)
 
     this.stage.addChild(this.pointer)
   }
@@ -48,9 +48,13 @@ export default class VrLayer {
         this.alpha = event.alpha
         this.gamma = event.gamma
       }
-      if (event.beta < 10 && this.buttons.element) {
-        this.buttons.element.y = (this.gamma - event.gamma) * -3
-        this.buttons.element.x = (this.alpha - event.alpha) * -3
+      if (this.buttons.element) {
+        this.buttons.element.y = (this.gamma - event.gamma) * -SENSIBILITY
+        this.buttons.element.x = (this.alpha - event.alpha) * -SENSIBILITY
+        let pt = this.buttons.element.localToLocal(this.buttons.element.x, this.buttons.element.y, this.pointer)
+        if (this.pointer.hitTest(pt.x, pt.y)) {
+          window.alert('hit')
+        }
       }
     })
   }
@@ -64,10 +68,11 @@ export default class VrLayer {
     this.buttons.element.graphics
       .setStrokeStyle(3)
       .beginStroke('#FFFFFF')
-      .drawRect(xCenter - 200, yCenter + 100, 150, 70)
-      .drawRect(xCenter + 50, yCenter + 100, 150, 70)
+      .drawRect(xCenter - 200, yCenter + 80, 150, 70)
+      .drawRect(xCenter + 50, yCenter + 80, 150, 70)
 
     this.stage.addChild(this.buttons.element)
+    this.stage.setChildIndex(this.buttons.element, 20)
     this.addButtonsListener()
   }
 
@@ -92,11 +97,12 @@ export default class VrLayer {
     let {xCenter, yCenter} = this
 
     circle.graphics
-      .setStrokeStyle(700)
-      .beginRadialGradientStroke(['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.9)'], [0, 0.15], xCenter, yCenter, 150, xCenter, yCenter, 600)
-      .drawCircle(xCenter, yCenter, 200)
+      .setStrokeStyle(320)
+      .beginRadialGradientStroke(['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.9)'], [0, 0.3], xCenter, yCenter, 70, xCenter, yCenter, 340)
+      .drawCircle(xCenter, yCenter, 60)
 
     this.stage.addChild(circle)
+    this.stage.setChildIndex(circle, this.stage.getNumChildren() - 1)
   }
 
   createCanvas (width, height) {

@@ -41,13 +41,28 @@ module.exports = [
         "file": "plugins/com.unarin.cordova.beacon/www/model/BeaconRegion.js",
         "id": "com.unarin.cordova.beacon.BeaconRegion",
         "runs": true
+    },
+    {
+        "file": "plugins/cordova-plugin-screen-orientation/www/screenorientation.js",
+        "id": "cordova-plugin-screen-orientation.screenorientation",
+        "clobbers": [
+            "cordova.plugins.screenorientation"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-screen-orientation/www/screenorientation.android.js",
+        "id": "cordova-plugin-screen-orientation.screenorientation.android",
+        "merges": [
+            "cordova.plugins.screenorientation"
+        ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
     "com.unarin.cordova.beacon": "3.4.1",
-    "cordova-plugin-whitelist": "1.2.2"
+    "cordova-plugin-whitelist": "1.2.2",
+    "cordova-plugin-screen-orientation": "1.4.2"
 };
 // BOTTOM OF METADATA
 });

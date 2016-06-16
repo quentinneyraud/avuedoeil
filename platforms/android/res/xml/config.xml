@@ -8,10 +8,9 @@
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
         <param name="onload" value="true" />
     </feature>
-    <preference name="xwalkVersion" value="18+" />
-    <preference name="xwalkCommandLine" value="--disable-pull-to-refresh-effect" />
-    <preference name="xwalkMode" value="embedded" />
-    <preference name="xwalkMultipleApk" value="true" />
+    <feature name="YoikScreenOrientation">
+        <param name="android-package" value="net.yoik.cordova.plugins.screenorientation.YoikScreenOrientation" />
+    </feature>
     <allow-intent href="market:*" />
     <name>A vue d\'oeil</name>
     <description>
@@ -21,6 +20,8 @@
         Apache Cordova Team
     </author>
     <content src="index.html" />
+    <icon density="mdpi" height="57" platform="android" src="static/appicon.png" width="57" />
+    <preference name="Fullscreen" value="true" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
