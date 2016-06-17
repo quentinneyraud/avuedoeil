@@ -1,5 +1,5 @@
 import debug from 'debug'
-import Beacon from './Beacon'
+// import Beacon from './Beacon'
 import { beaconConfig } from './beaconConfig'
 import MapExperience from './MapExperience'
 
@@ -14,13 +14,13 @@ export default class ExperienceManager {
 
     this.loadExperiences(vrLayer)
 
-    this.beacon = new Beacon()
-    this.beacon.watch()
-    this.beacon.onDataReceived(this.onBeaconDatasReceived.bind(this))
+    // this.beacon = new Beacon()
+    // this.beacon.watch()
+    // this.beacon.onDataReceived(this.onBeaconDatasReceived.bind(this))
 
-    // setTimeout(() => {
-    //   this.experiences[0].experienceObject.begin()
-    // })
+    setTimeout(() => {
+      this.experiences[0].object.begin()
+    })
   }
 
   // Load all experiences
@@ -35,7 +35,7 @@ export default class ExperienceManager {
   }
 
   onBeaconDatasReceived (beaconDatas) {
-    dbg('beacon datas received')
+    // dbg('beacon datas received')
 
     if (this.isOneExperienceRunning()) {
       return false
@@ -52,14 +52,14 @@ export default class ExperienceManager {
         })
         if (experience) {
           dbg('Begin new experience', experience)
-          // experience.experienceObject.begin()
+          experience.object.begin()
         }
       }
     }
   }
 
   isOneExperienceRunning () {
-    dbg('isOneExperienceRunning')
+    // dbg('isOneExperienceRunning')
     for (let experience of this.experiences) {
       if (experience.object.active) {
         return true

@@ -57,7 +57,7 @@ export default class Video {
           // Get camera from devices
           let device = devices.filter((device) => {
             return device.kind === 'videoinput'
-          })[1]
+          })[0]
           if (device) {
             this.videoOptions.video.optional.push({sourceId: device.deviceId})
             resolve()

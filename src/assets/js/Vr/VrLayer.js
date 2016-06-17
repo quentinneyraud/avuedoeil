@@ -1,8 +1,9 @@
+/* global Image */
 import debug from 'debug'
 import EaselJS from 'createjs-collection'
 
 const dbg = debug('avuedoeil:vrLayer')
-const SENSIBILITY = 6
+const SENSIBILITY = 5
 // Pointer
 const POINTER_RADIUS = 7
 // Buttons
@@ -65,9 +66,9 @@ export default class VrLayer {
         this.gamma = event.gamma
       }
       if (this.elements.buttonLeft && this.elements.buttonRight) {
-        this.elements.buttonLeft.x = (this.alpha - event.alpha) * -SENSIBILITY * 2
+        this.elements.buttonLeft.x = (this.alpha - event.alpha) * -SENSIBILITY
         this.elements.buttonLeft.y = (this.gamma - event.gamma) * SENSIBILITY
-        this.elements.buttonRight.x = (this.alpha - event.alpha) * -SENSIBILITY * 2
+        this.elements.buttonRight.x = (this.alpha - event.alpha) * -SENSIBILITY
         this.elements.buttonRight.y = (this.gamma - event.gamma) * SENSIBILITY
       }
     })
@@ -76,6 +77,10 @@ export default class VrLayer {
   createButtons () {
     dbg('createButtons')
     let {xCenter, yCenter} = this
+
+    this.nonImage = new Image()
+    this.nonImage.src = './static/img/vrComponent/oui.png'
+    // this.ouiImage = new window.Image('../../../static/img/vrComponent/oui.png')
 
     // First
     this.elements.buttonLeft = new EaselJS.Shape()
@@ -87,16 +92,19 @@ export default class VrLayer {
       .drawRect(xCenter - BUTTON_MARGE_X - BUTTON_WIDTH, yCenter + BUTTON_MARGE_Y, BUTTON_WIDTH, BUTTON_HEIGHT)
 
     // Second
-    this.elements.buttonRight = new EaselJS.Shape()
-    this.elements.buttonRight.alpha = 0
+    this.nonImage.onload = () => {
+      this.elements.buttonRight = new EaselJS.Shape()
+      this.elements.buttonRight.alpha = 1
 
-    this.elements.buttonRight.graphics
-      .setStrokeStyle(BUTTON_STROKE)
-      .beginStroke('#FFFFFF')
-      .drawRect(xCenter + BUTTON_MARGE_X, yCenter + BUTTON_MARGE_Y, BUTTON_WIDTH, BUTTON_HEIGHT)
+      this.elements.buttonRight.graphics
+        .beginBitmapFill(this.nonImage, 'no-repeat')
+        .drawRect(xCenter + BUTTON_MARGE_X, yCenter + BUTTON_MARGE_Y, BUTTON_WIDTH, BUTTON_HEIGHT)
+
+      this.stage.addChild(this.elements.buttonRight)
+      this.stage.update()
+    }
 
     this.stage.addChild(this.elements.buttonLeft)
-    this.stage.addChild(this.elements.buttonRight)
 
     this.addButtonsListener()
   }
@@ -109,10 +117,9 @@ export default class VrLayer {
   }
 
   detectButtons () {
-  }
+    if (this.elements.buttonLeft && this.elements.buttonRight) {
 
-  setListenerButtons (cb) {
-    this.buttons.callback = cb
+    }
   }
 
   createVisionEffect () {
@@ -137,12 +144,25 @@ export default class VrLayer {
     }
     let sprite = new EaselJS.SpriteSheet(data)
     let animation = new EaselJS.Sprite(sprite)
-    animation.x = xCenter - 350
-    animation.y = yCenter - 200
-    animation.scaleX = 0.8
-    animation.scaleY = 0.8
+    animation.x = xCenter - 200
+    animation.y = yCenter - 100
+    animation.scaleX = 0.5
+    animation.scaleY = 0.5
 
     this.stage.addChild(animation)
-    animation.gotoAndStop(15)
+    animation.gotoAndPlay(0)
+  }
+
+  showTutorial (src) {
+    let bitMap = new EaselJS.Bitmap(src)
+    bitMap.x = this.xCenter - 140
+    bitMap.y = this.yCenter - 75
+    bitMap.scaleX = 0.15
+    bitMap.scaleY = 0.15
+
+    this.stage.addChild(bitMap)
+    setTimeout(() => {
+      
+    })
   }
 }
