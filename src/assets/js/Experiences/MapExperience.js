@@ -20,20 +20,13 @@ export default class MapExperience {
   }
 
   showTutorial () {
-    this.vrLayer.showTutorial('static/img/vrComponent/tutoriel4.png')
+    dbg('show tutorial')
+    this.vrLayer.showTutorial('static/img/vrComponent/tutoriel4.png', 10000, this.showQuestion.bind(this))
   }
 
   showQuestion () {
+    dbg('show question')
     this.vrLayer.showQuestion('static/img/vrComponent/question4.png', 14036, 6970, 17, 15)
-    // this.vrLayer.setOnLeftButtonValidate(this.onLeftButtonValidate.bind(this))
-    // this.vrLayer.setOnRightButtonValidate(this.onRightButtonValidate.bind(this))
-  }
-
-  onLeftButtonValidate () {
-    console.log('left validate')
-  }
-
-  onRightButtonValidate () {
-    console.log('right validate')
+    this.vrLayer.createButtons()
   }
 }

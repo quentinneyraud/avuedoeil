@@ -1,5 +1,5 @@
 <template>
-  <div class="splashscreenComponent screen" transition="mytransition">
+  <div class="splashscreenComponent screen">
     <img v-el:logo class="splashscreenComponent__logo" src="../../static/img/logo.png" alt="">
     <div v-el:loader class="splashscreenComponent__loader">
       <div v-el:loading-bar class="splashscreenComponent__loader__loaded" id="js-loading_bar"></div>
@@ -45,19 +45,11 @@
         new TimelineMax()
           .to(this.$els.logo, duration, {scale: 0.7, y: '-=100'}, start)
           .to([this.$els.title, this.$els.subTitle], duration, {autoAlpha: 1, y: '-=100'}, start)
-          .to(this.$els.loader, duration, {width: '35%', y: '-=135'}, start)
+          .to(this.$els.loader, duration, {width: '35%', y: '-=135'}, start - 0.5)
           .call(this.goToMaps, null, this, 2.5)
       },
       goToMaps () {
         this.$router.go('/maps')
-      }
-    },
-    transitions: {
-      mytransition: {
-        css: false,
-        leave: function (el, done) {
-          TweenMax.to(el, 10, {y: '-=150', autoAlpha: 0, onComplete: done()})
-        }
       }
     }
   }

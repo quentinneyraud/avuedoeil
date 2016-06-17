@@ -30,7 +30,7 @@
       }
     },
     ready () {
-//      window.screen.lockOrientation('landscape')
+      window.screen.lockOrientation('landscape')
       let vr = new Vr()
       console.log(vr)
     }

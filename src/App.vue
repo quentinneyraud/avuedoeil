@@ -1,16 +1,11 @@
 <template>
   <div id="app">
-    <router-view transition-mode="in-out"></router-view>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-  import Splashscreen from './components/Splashscreen.vue'
-
   export default {
-    components: {
-      Splashscreen
-    }
   }
 </script>
 

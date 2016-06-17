@@ -51,12 +51,16 @@ export default class Vr {
 
   animate () {
     if (this.canvas.context) {
+      // draw video in canvas
       this.canvas.draw(this.video.$els.video)
+      // update overlay canvas
       this.vrLayer.stage.update()
+      // and draw it in canvas
       this.canvas.context.drawImage(this.vrLayer.canvas, 0, 0, this.canvas.width, this.canvas.height)
 
       Raf(this.animate.bind(this))
 
+      // draw eyes
       this.renderer.render(this.canvas.canvas)
     }
   }

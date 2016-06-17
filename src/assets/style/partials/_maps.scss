@@ -2,7 +2,7 @@
 @import '../variables';
 
 .mapsComponent {
-  overflow-x: hidden;
+  overflow: hidden;
 
   &__city-name {
     position: absolute;
@@ -21,12 +21,22 @@
     &__arrow-left, &__arrow-right {
       z-index: 10;
       position: absolute;
-      top: 30px;
-      padding: 25px;
-      transform: translateY(-50%)
+      top: 42px;
+      width: 60px;
+      height: 60px;
+      fill: $blue;
+      transform: translateY(-50%);
+      transition: all 0.5s;
+      &.hidden {
+        fill: rgba(0, 255, 216, 0.2);
+      }
     }
     &__arrow-right {
       right: 0;
+    }
+    &__arrow-left {
+      transform-origin: 50% 40%;
+      transform: translateY(-50%) rotate(180deg);
     }
   }
 
@@ -38,14 +48,61 @@
       width: 100vw;
       height: 100vh;
       &:nth-child(1) {
-        background: url('../../static/img/mapsComponent/lyon.jpg');
+        background: url('../../static/img/mapsComponent/lyon.png');
+        background-size: cover;
       }
       &:nth-child(2) {
-        background: url('../../static/img/mapsComponent/paris.jpg');
+        background: url('../../static/img/mapsComponent/paris.png');
+        background-size: cover;
       }
       &:nth-child(3) {
-        background: url('../../static/img/mapsComponent/marseille.jpg');
+        background: url('../../static/img/mapsComponent/marseille.png');
+        background-size: cover;
       }
+    }
+  }
+
+  &__infos {
+    position: absolute;
+    bottom: 20px;
+    left: 5vw;
+    width: 90vw;
+    height: 70px;
+    background-color: rgba(53, 17, 90, 0.6);
+    transform: translateY(150%);
+    &__vr, &__share {
+      position: absolute;
+      height: 25px;
+      top: 50%;
+    }
+    &__vr {
+      left: 30%;
+      transform: translate(-50%, -50%);
+    }
+    &__share {
+      left: 70%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  &__user-location{
+    @include center();
+    width: 30px;
+    height: 30px;
+    background-color: $violet;
+    border-radius: 50%;
+  }
+
+  &__experiences-location{
+    position: absolute;
+    width: 25px;
+    &#exp1{
+      top: 50%;
+      left: 80%;
+    }
+    &#exp2{
+      top: 30%;
+      left: 10%;
     }
   }
 }

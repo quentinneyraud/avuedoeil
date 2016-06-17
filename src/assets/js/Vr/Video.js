@@ -17,6 +17,7 @@ export default class Video {
     this.initializeElements()
   }
 
+  // create video tag
   initializeElements () {
     dbg('initializeElements')
     this.$els = {
@@ -30,6 +31,7 @@ export default class Video {
     this.$els.video.style.height = '100%'
   }
 
+  // check HTML api support
   isBrowserSupport () {
     dbg('isBrowserSupport')
 
@@ -48,6 +50,7 @@ export default class Video {
     }
   }
 
+  // get device in / out
   getSourceId () {
     dbg('getSourceId')
     return new Promise((resolve, reject) => {
@@ -57,7 +60,7 @@ export default class Video {
           // Get camera from devices
           let device = devices.filter((device) => {
             return device.kind === 'videoinput'
-          })[0]
+          })[1]
           if (device) {
             this.videoOptions.video.optional.push({sourceId: device.deviceId})
             resolve()
@@ -69,6 +72,7 @@ export default class Video {
     })
   }
 
+  // get videoinput stream & put it in video tag
   getStream () {
     dbg('getStream with constraints', this.videoOptions)
 

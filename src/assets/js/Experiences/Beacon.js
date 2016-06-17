@@ -12,6 +12,7 @@ export default class Beacon {
     this.beacons = beaconConfig[0]
   }
 
+  // start watching beacon signal
   watch () {
     dbg('watch')
     this.delegate = new cordova.plugins.locationManager.Delegate()
@@ -24,6 +25,7 @@ export default class Beacon {
       .done()
   }
 
+  // set listener on data received
   onDataReceived (cb) {
     dbg('data received')
     this.delegate.didRangeBeaconsInRegion = cb

@@ -1,11 +1,17 @@
+import debug from 'debug'
+
+const dbg = debug('avuedoeil:renderer')
+
 export default class Renderer {
   constructor () {
+    dbg('Initialize Renderer')
     this.canvas = {
       left: {},
       right: {}
     }
   }
 
+  // Create two canvas with 50% width
   createCanvas () {
     this.canvas.left.element = document.createElement('canvas')
     this.canvas.left.element.width = window.innerWidth / 2
@@ -21,6 +27,7 @@ export default class Renderer {
     this.canvas.right.context = this.canvas.right.element.getContext('2d')
   }
 
+  // get screen size canvas and draw its center in 2 eyes
   render (canvas) {
     this.canvas.left.context.drawImage(canvas, -160, -60, canvas.width, canvas.height)
     this.canvas.right.context.drawImage(canvas, -160, -60, canvas.width, canvas.height)

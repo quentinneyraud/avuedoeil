@@ -25,6 +25,7 @@ export default class Canvas {
     this.context = this.canvas.getContext('2d')
   }
 
+  // get video and draw it in canvas
   draw (video) {
     this.context.drawImage(video, 0, 0, this.canvas.width, this.canvas.height)
   }
