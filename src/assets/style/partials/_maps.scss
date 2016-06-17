@@ -1,0 +1,51 @@
+@import '../mixins';
+@import '../variables';
+
+.mapsComponent {
+  overflow-x: hidden;
+
+  &__city-name {
+    position: absolute;
+    display: inline-block;
+    width: 100vw;
+    padding-top: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: $blue;
+    text-transform: uppercase;
+    z-index: 10;
+    text-align: center;
+  }
+
+  &__arrows {
+    &__arrow-left, &__arrow-right {
+      z-index: 10;
+      position: absolute;
+      top: 30px;
+      padding: 25px;
+      transform: translateY(-50%)
+    }
+    &__arrow-right {
+      right: 0;
+    }
+  }
+
+  &__maps {
+    width: 300vw;
+    display: flex;
+
+    &__map {
+      width: 100vw;
+      height: 100vh;
+      &:nth-child(1) {
+        background: url('../../static/img/mapsComponent/lyon.jpg');
+      }
+      &:nth-child(2) {
+        background: url('../../static/img/mapsComponent/paris.jpg');
+      }
+      &:nth-child(3) {
+        background: url('../../static/img/mapsComponent/marseille.jpg');
+      }
+    }
+  }
+}

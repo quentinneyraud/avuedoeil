@@ -9,15 +9,11 @@
                 "parents": {
                     "/*": [
                         {
-                            "xml": "<feature name=\"LocationManager\"><param name=\"android-package\" value=\"com.unarin.cordova.beacon.LocationManager\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"YoikScreenOrientation\"><param name=\"android-package\" value=\"net.yoik.cordova.plugins.screenorientation.YoikScreenOrientation\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "xml": "<feature name=\"LocationManager\"><param name=\"android-package\" value=\"com.unarin.cordova.beacon.LocationManager\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -56,25 +52,35 @@
                             "xml": "<service android:enabled=\"true\" android:name=\"org.altbeacon.beacon.BeaconIntentProcessor\"><meta-data android:name=\"background\" android:value=\"true\" /><intent-filter android:priority=\"1\"><action android:name=\"com.unarin.cordova.beacon.IBeaconPlugin.DID_RANGING\" /><action android:name=\"com.unarin.cordova.beacon.IBeaconPlugin.DID_MONITORING\" /></intent-filter></service>",
                             "count": 1
                         }
-                    ],
-                    "/*": []
+                    ]
                 }
             }
         }
     },
     "installed_plugins": {
-        "com.unarin.cordova.beacon": {
-            "PACKAGE_NAME": "fr.quentinneyraud.www"
-        },
         "cordova-plugin-screen-orientation": {
             "PACKAGE_NAME": "fr.quentinneyraud.www"
         },
-        "cordova-plugin-whitelist": {
+        "com.unarin.cordova.beacon": {
             "PACKAGE_NAME": "fr.quentinneyraud.www"
         }
     },
     "dependent_plugins": {},
     "modules": [
+        {
+            "file": "plugins/cordova-plugin-screen-orientation/www/screenorientation.js",
+            "id": "cordova-plugin-screen-orientation.screenorientation",
+            "clobbers": [
+                "cordova.plugins.screenorientation"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-screen-orientation/www/screenorientation.android.js",
+            "id": "cordova-plugin-screen-orientation.screenorientation.android",
+            "merges": [
+                "cordova.plugins.screenorientation"
+            ]
+        },
         {
             "file": "plugins/com.unarin.cordova.beacon/www/lib/underscore-min-1.6.js",
             "id": "com.unarin.cordova.beacon.underscorejs",
@@ -116,25 +122,10 @@
             "file": "plugins/com.unarin.cordova.beacon/www/model/BeaconRegion.js",
             "id": "com.unarin.cordova.beacon.BeaconRegion",
             "runs": true
-        },
-        {
-            "file": "plugins/cordova-plugin-screen-orientation/www/screenorientation.js",
-            "id": "cordova-plugin-screen-orientation.screenorientation",
-            "clobbers": [
-                "cordova.plugins.screenorientation"
-            ]
-        },
-        {
-            "file": "plugins/cordova-plugin-screen-orientation/www/screenorientation.android.js",
-            "id": "cordova-plugin-screen-orientation.screenorientation.android",
-            "merges": [
-                "cordova.plugins.screenorientation"
-            ]
         }
     ],
     "plugin_metadata": {
-        "com.unarin.cordova.beacon": "3.4.1",
         "cordova-plugin-screen-orientation": "1.4.2",
-        "cordova-plugin-whitelist": "1.2.2"
+        "com.unarin.cordova.beacon": "3.4.1"
     }
 }

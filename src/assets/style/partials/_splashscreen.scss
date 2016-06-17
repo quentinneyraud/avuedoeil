@@ -1,8 +1,8 @@
 @import '../mixins';
 @import '../variables';
 
-.splashscreen{
-  background: url('../assets/img/metro_bg.png') no-repeat;
+.splashscreenComponent{
+  background: url('../../static/img/metro_bg.png') no-repeat;
   background-size: cover;
 
   &__logo{
@@ -10,7 +10,7 @@
   }
 
   &__loader{
-    @include place(70%, 50%);
+    @include place(75%, 50%);
     background-color: rgba(0, 255, 216, 0.2);
     height: 2px;
     width: 50%;
@@ -40,5 +40,3 @@
     font-size: $fsz-title;
   }
 }
-
-

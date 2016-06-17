@@ -1,4 +1,5 @@
 import debug from 'debug'
+import { beaconConfig } from './beaconConfig'
 
 const dbg = debug('avuedoeil:beacon')
 
@@ -8,12 +9,7 @@ export default class Beacon {
     dbg('Init beacons')
     // this.currentExperience = null
     this.delegate = null
-    this.beacons = {
-      uuid: '00000000-1111-2222-3333-444444444444',
-      identifier: 'MapExperience',
-      minor: 48643,
-      major: 22238
-    }
+    this.beacons = beaconConfig[0]
   }
 
   watch () {
@@ -30,13 +26,6 @@ export default class Beacon {
 
   onDataReceived (cb) {
     dbg('data received')
-    this.delegate.didRangeBeaconsInRegion = function (results) {
-      // Sometimes, beacons are not detected
-      if (results.beacons.length > 0) {
-        dbg(results.beacons)
-        // let sorted = results.beacons.sort((a, b) => a.accuracy < b.accuracy)
-        cb(true)
-      }
-    }
+    this.delegate.didRangeBeaconsInRegion = cb
   }
 }

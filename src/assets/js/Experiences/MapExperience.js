@@ -6,23 +6,17 @@ export default class MapExperience {
   constructor (vrLayer) {
     dbg('Init Mapexperience')
     this.vrLayer = vrLayer
-    this.setData()
-  }
-
-  setData () {
-    this.data = {
-      question: 'http://www.placehold.it/20x20',
-      answer: ['OUI', 'NON']
-    }
+    this.active = false
   }
 
   begin () {
     dbg('begin')
+    this.active = true
     this.showQuestion()
   }
 
   end () {
-
+    this.active = false
   }
 
   showTutorial () {

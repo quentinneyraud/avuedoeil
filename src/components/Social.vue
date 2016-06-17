@@ -6,15 +6,15 @@
     </div>
     <ul class="social__items">
       <li class="social__item">
-        <img src="../assets/img/icon/facebook.png" class="social__item__img">
+        <img src="../../static/img/icon/facebook.png" class="social__item__img">
         <p class="social__item__title">A vue d'oeil Experience</p>
       </li>
       <li class="social__item">
-        <img src="../assets/img/icon/twitter.png" class="social__item__img">
+        <img src="../../static/img/icon/twitter.png" class="social__item__img">
         <p class="social__item__title">#avuedoeil</p>
       </li>
       <li class="social__item">
-        <img src="../assets/img/icon/site.png" class="social__item__img">
+        <img src="../../static/img/icon/site.png" class="social__item__img">
         <p class="social__item__title">www.avuedoeil.fr</p>
       </li>
     </ul>

@@ -1,6 +1,20 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
+        "file": "plugins/cordova-plugin-screen-orientation/www/screenorientation.js",
+        "id": "cordova-plugin-screen-orientation.screenorientation",
+        "clobbers": [
+            "cordova.plugins.screenorientation"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-screen-orientation/www/screenorientation.android.js",
+        "id": "cordova-plugin-screen-orientation.screenorientation.android",
+        "merges": [
+            "cordova.plugins.screenorientation"
+        ]
+    },
+    {
         "file": "plugins/com.unarin.cordova.beacon/www/lib/underscore-min-1.6.js",
         "id": "com.unarin.cordova.beacon.underscorejs",
         "runs": true
@@ -41,28 +55,13 @@ module.exports = [
         "file": "plugins/com.unarin.cordova.beacon/www/model/BeaconRegion.js",
         "id": "com.unarin.cordova.beacon.BeaconRegion",
         "runs": true
-    },
-    {
-        "file": "plugins/cordova-plugin-screen-orientation/www/screenorientation.js",
-        "id": "cordova-plugin-screen-orientation.screenorientation",
-        "clobbers": [
-            "cordova.plugins.screenorientation"
-        ]
-    },
-    {
-        "file": "plugins/cordova-plugin-screen-orientation/www/screenorientation.android.js",
-        "id": "cordova-plugin-screen-orientation.screenorientation.android",
-        "merges": [
-            "cordova.plugins.screenorientation"
-        ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "com.unarin.cordova.beacon": "3.4.1",
     "cordova-plugin-screen-orientation": "1.4.2",
-    "cordova-plugin-whitelist": "1.2.2"
+    "com.unarin.cordova.beacon": "3.4.1"
 };
 // BOTTOM OF METADATA
 });
