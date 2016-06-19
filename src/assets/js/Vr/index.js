@@ -5,6 +5,7 @@ import Renderer from './Renderer'
 import VrLayer from './VrLayer'
 import ExperienceManager from '../Experiences/ExperienceManager'
 import Raf from 'raf'
+import socket from 'socket.io-client'
 
 const dbg = debug('avuedoeil:vr')
 
@@ -19,6 +20,8 @@ export default class Vr {
     this.video = new Video()
     this.canvas = new Canvas()
     this.renderer = new Renderer()
+
+    this.io = socket.connect('192.168.1.61:3000')
 
     this.listenVideoFeed()
   }
@@ -38,6 +41,9 @@ export default class Vr {
             this.renderer.createCanvas()
             this.vrLayer = new VrLayer(this.canvas.width, this.canvas.height)
             this.experienceManager = new ExperienceManager(this.vrLayer)
+            this.io.on('test', () => {
+              console.log('test')
+            })
             this.animate()
           })
           .catch((err) => {

@@ -8,15 +8,21 @@
     <div class="mapsComponent__maps" v-el:maps v-on:click="showInfos()">
       <div class="mapsComponent__maps__map">
         <div class="mapsComponent__user-location"></div>
-        <img src="../../static/img/mapsComponent/experience_location.png" class="mapsComponent__experiences-location" id="exp1" v-el:cursor>
-        <img src="../../static/img/mapsComponent/experience_location.png" class="mapsComponent__experiences-location" id="exp2" v-el:cursor>
+        <img src="../../static/img/mapsComponent/experience_location.png" class="mapsComponent__experiences-location" id="exp1">
+        <img src="../../static/img/mapsComponent/experience_location.png" class="mapsComponent__experiences-location" id="exp2">
       </div>
-      <div class="mapsComponent__maps__map"></div>
-      <div class="mapsComponent__maps__map"></div>
+      <div class="mapsComponent__maps__map">
+        <img src="../../static/img/mapsComponent/experience_location.png" class="mapsComponent__experiences-location" id="exp3">
+        <img src="../../static/img/mapsComponent/experience_location.png" class="mapsComponent__experiences-location" id="exp4">
+      </div>
+      <div class="mapsComponent__maps__map">
+        <img src="../../static/img/mapsComponent/experience_location.png" class="mapsComponent__experiences-location" id="exp5">
+        <img src="../../static/img/mapsComponent/experience_location.png" class="mapsComponent__experiences-location" id="exp6">
+      </div>
     </div>
     <div class="mapsComponent__infos" v-el:infos>
-      <img class="mapsComponent__infos__vr" src="../../static/img/icon/cardboardhover.png" v-on:click="goToVr()" alt="">
-      <img class="mapsComponent__infos__share" src="../../static/img/icon/share.png" v-on:click="goToShare()" alt="">
+      <img class="mapsComponent__infos__vr" src="../../static/img/mapsComponent/cardboardhover.png" v-on:click="goToVr()" alt="">
+      <img class="mapsComponent__infos__share" src="../../static/img/mapsComponent/share.png" v-on:click="goToShare()" alt="">
     </div>
   </div>
 </template>
@@ -37,7 +43,7 @@
       }
     },
     ready () {
-      window.screen.lockOrientation('portrait')
+//      window.screen.lockOrientation('portrait')
       TweenMax.staggerFromTo(this.$els.cursor, 0.2, {autoAlpha: 0, y: 10}, {autoAlpha: 1, y: 0})
     },
     methods: {
@@ -59,7 +65,7 @@
         TweenMax.to(this.$els.infos, 0.5, {y: 0, ease: Ease.Back.easeOut.config(0.8)})
       },
       goToVr () {
-        this.$router.go('/vr')
+        this.$router.go('/tutovr')
       },
       goToShare () {
         this.$router.go('/social')

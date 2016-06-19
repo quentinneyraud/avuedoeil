@@ -26,7 +26,7 @@
       }
     },
     ready () {
-      window.screen.lockOrientation('portrait')
+//      window.screen.lockOrientation('portrait')
       TweenMax.set([this.$els.title, this.$els.subTitle], {autoAlpha: 0})
       TweenMax.set([this.$els.loader, this.$els.subTitle], {x: '-50%'})
       this.load(this.animate)
@@ -45,11 +45,11 @@
         new TimelineMax()
           .to(this.$els.logo, duration, {scale: 0.7, y: '-=100'}, start)
           .to([this.$els.title, this.$els.subTitle], duration, {autoAlpha: 1, y: '-=100'}, start)
-          .to(this.$els.loader, duration, {width: '35%', y: '-=135'}, start - 0.5)
+          .to(this.$els.loader, duration, {width: '35%', y: '-=135'}, start)
           .call(this.goToMaps, null, this, 2.5)
       },
       goToMaps () {
-        this.$router.go('/maps')
+        this.$router.replace('/maps')
       }
     }
   }

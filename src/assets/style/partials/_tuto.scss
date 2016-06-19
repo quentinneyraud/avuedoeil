@@ -1,0 +1,25 @@
+@import '../mixins';
+@import '../variables';
+
+.tutovrComponent {
+  background: url('../../static/img/metro_bg.png') no-repeat;
+  background-size: cover;
+
+  &__cardboard{
+    @include center()
+  }
+
+  &__fleche{
+    @include place(35%, 85%);
+  }
+
+  &__smartphone{
+    @include place(20%, 60%);
+  }
+
+  &__instruction{
+    @include place(80%, 50%);
+    width: 400px;
+    color: $blue;
+  }
+}

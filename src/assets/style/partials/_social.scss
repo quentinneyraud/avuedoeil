@@ -8,7 +8,7 @@
   &__infos {
     position: relative;
     display: block;
-    height: 30vh;
+    height: 25vh;
   }
 
   &__message {
@@ -22,7 +22,7 @@
   }
 
   &__separator {
-    @include place(75%, 50%);
+    @include place(95%, 50%);
     width: 40%;
     height: 2px;
     background-color: $blue;

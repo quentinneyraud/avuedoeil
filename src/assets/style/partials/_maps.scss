@@ -47,6 +47,7 @@
     &__map {
       width: 100vw;
       height: 100vh;
+      position: relative;
       &:nth-child(1) {
         background: url('../../static/img/mapsComponent/lyon.png');
         background-size: cover;
@@ -74,35 +75,63 @@
       position: absolute;
       height: 25px;
       top: 50%;
+      transform: translate(-50%, -50%);
     }
     &__vr {
       left: 30%;
-      transform: translate(-50%, -50%);
     }
     &__share {
       left: 70%;
-      transform: translate(-50%, -50%);
     }
   }
 
-  &__user-location{
+  &__user-location {
     @include center();
+    animation: pulse 2s infinite;
     width: 30px;
     height: 30px;
-    background-color: $violet;
+    background-color: rgba(53, 17, 90, 0.6);
     border-radius: 50%;
   }
 
-  &__experiences-location{
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.5);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  &__experiences-location {
     position: absolute;
     width: 25px;
-    &#exp1{
+    &#exp1 {
       top: 50%;
       left: 80%;
     }
-    &#exp2{
+    &#exp2 {
       top: 30%;
       left: 10%;
+    }
+    &#exp3 {
+      top: 60%;
+      left: 35%;
+    }
+    &#exp4 {
+      top: 30%;
+      left: 55%;
+    }
+    &#exp5 {
+      top: 25%;
+      left: 40%;
+    }
+    &#exp6 {
+      top: 65%;
+      left: 40%;
     }
   }
 }

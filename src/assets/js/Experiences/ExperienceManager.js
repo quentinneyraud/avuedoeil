@@ -1,5 +1,5 @@
 import debug from 'debug'
-import Beacon from './Beacon'
+// import Beacon from './Beacon'
 import { beaconConfig } from './beaconConfig'
 import MapExperience from './MapExperience'
 
@@ -14,13 +14,13 @@ export default class ExperienceManager {
 
     this.loadExperiences(vrLayer)
 
-    this.beacon = new Beacon()
-    this.beacon.watch()
-    this.beacon.onDataReceived(this.onBeaconDatasReceived.bind(this))
+    // this.beacon = new Beacon()
+    // this.beacon.watch()
+    // this.beacon.onDataReceived(this.onBeaconDatasReceived.bind(this))
 
-    // setTimeout(() => {
-    //   this.experiences[0].object.begin()
-    // }, 200)
+    setTimeout(() => {
+      this.experiences[0].object.begin()
+    }, 200)
   }
 
   // Load all experiences

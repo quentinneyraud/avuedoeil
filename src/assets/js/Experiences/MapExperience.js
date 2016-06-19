@@ -12,7 +12,8 @@ export default class MapExperience {
   begin () {
     dbg('begin')
     this.active = true
-    this.showTutorial()
+    // this.showTutorial()
+    this.showQuestion()
   }
 
   end () {
@@ -21,12 +22,18 @@ export default class MapExperience {
 
   showTutorial () {
     dbg('show tutorial')
-    this.vrLayer.showTutorial('static/img/vrComponent/tutoriel4.png', 10000, this.showQuestion.bind(this))
+    this.vrLayer.showTutorial('static/img/vrComponent/tutoriel_4_1.png', 5000, () => {
+      this.vrLayer.showTutorial('static/img/vrComponent/tutoriel_4_2.png', 5000, () => {
+        this.vrLayer.showTutorial('static/img/vrComponent/tutoriel_4_3.png', 5000, () => {
+          this.showQuestion()
+        })
+      })
+    })
   }
 
   showQuestion () {
     dbg('show question')
-    this.vrLayer.showQuestion('static/img/vrComponent/question4.png', 14036, 6970, 17, 15)
+    // this.vrLayer.showQuestion('static/img/vrComponent/question4.png', 14036, 6970, 17, 15)
     this.vrLayer.createButtons()
   }
 }

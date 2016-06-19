@@ -6,11 +6,11 @@ const SENSIBILITY = 5
 // Pointer
 const POINTER_RADIUS = 7
 // Buttons
-const BUTTON_WIDTH = 150
-const BUTTON_HEIGHT = 70
-const BUTTON_MARGE_X = 50
-const BUTTON_MARGE_Y = 80
-const BUTTON_STROKE = 3
+// const BUTTON_WIDTH = 150
+// const BUTTON_HEIGHT = 70
+// const BUTTON_MARGE_X = 50
+// const BUTTON_MARGE_Y = 80
+// const BUTTON_STROKE = 3
 
 export default class VrLayer {
   constructor (width, height) {
@@ -30,8 +30,10 @@ export default class VrLayer {
     this.addPointer()
 
     EaselJS.Ticker.on('tick', (event) => {
-      this.animateButtons()
-      this.detectButtons()
+      if (this.elements.buttonLeft && this.elements.buttonRight) {
+        this.animateButtons()
+        this.detectButtons()
+      }
       this.stage.update(event)
     })
   }
@@ -43,6 +45,15 @@ export default class VrLayer {
 
     this.xCenter = width / 2
     this.yCenter = height / 2
+
+    this.buttonLeft = {
+      originalX: this.xCenter - 160,
+      originalY: this.yCenter + 50
+    }
+    this.buttonRight = {
+      originalX: this.xCenter + 30,
+      originalY: this.yCenter + 50
+    }
   }
 
   addPointer () {
@@ -59,46 +70,55 @@ export default class VrLayer {
   }
 
   addButtonsListener () {
+    dbg('add listener')
     window.addEventListener('deviceorientation', (event) => {
       if (!this.alpha && !this.gamma) {
         this.alpha = event.alpha
         this.gamma = event.gamma
       }
       if (this.elements.buttonLeft && this.elements.buttonRight) {
-        this.elements.buttonLeft.x = (this.alpha - event.alpha) * -SENSIBILITY
-        this.elements.buttonLeft.y = (this.gamma - event.gamma) * SENSIBILITY
-        this.elements.buttonRight.x = (this.alpha - event.alpha) * -SENSIBILITY
-        this.elements.buttonRight.y = (this.gamma - event.gamma) * SENSIBILITY
+        this.elements.buttonLeft.x = this.buttonLeft.originalX + (this.alpha - event.alpha) * -SENSIBILITY
+        this.elements.buttonLeft.y = this.buttonLeft.originalY + (this.gamma - event.gamma) * -SENSIBILITY
+        this.elements.buttonRight.x = this.buttonRight.originalX + (this.alpha - event.alpha) * -SENSIBILITY
+        this.elements.buttonRight.y = this.buttonRight.originalY + (this.gamma - event.gamma) * -SENSIBILITY
       }
     })
   }
 
   createButtons () {
     dbg('createButtons')
-    let {xCenter, yCenter} = this
 
     // First
-    this.elements.buttonLeft = new EaselJS.Shape()
-    this.elements.buttonLeft.alpha = 0
+    let data = {
+      images: ['static/img/vrComponent/boutons.png'],
+      frames: {width: 128, height: 70},
+      framerate: 10
+    }
+    let sprite = new EaselJS.SpriteSheet(data)
+    this.elements.buttonLeft = new EaselJS.Sprite(sprite)
+    this.elements.buttonLeft.x = this.buttonLeft.originalX
+    this.elements.buttonLeft.y = this.buttonLeft.originalY
 
-    this.elements.buttonLeft.graphics
-      .setStrokeStyle(BUTTON_STROKE)
-      .beginStroke('#FFFFFF')
-      .drawRect(xCenter - BUTTON_MARGE_X - BUTTON_WIDTH, yCenter + BUTTON_MARGE_Y, BUTTON_WIDTH, BUTTON_HEIGHT)
-
-    // Second
-    this.elements.buttonRight = new EaselJS.Shape()
-    this.elements.buttonRight.alpha = 1
-
-    this.elements.buttonRight.graphics
-      .setStrokeStyle(BUTTON_STROKE)
-      .beginStroke('#FFFFFF')
-      .drawRect(xCenter + BUTTON_MARGE_X, yCenter + BUTTON_MARGE_Y, BUTTON_WIDTH, BUTTON_HEIGHT)
-
-    this.stage.addChild(this.elements.buttonRight)
-    this.stage.update()
+    let data2 = {
+      images: ['static/img/vrComponent/boutons.png'],
+      frames: {width: 128, height: 70},
+      framerate: 10
+    }
+    let sprite2 = new EaselJS.SpriteSheet(data2)
+    this.elements.buttonRight = new EaselJS.Sprite(sprite2)
+    this.elements.buttonRight.x = this.buttonRight.originalX
+    this.elements.buttonRight.y = this.buttonRight.originalY
 
     this.stage.addChild(this.elements.buttonLeft)
+    this.stage.addChild(this.elements.buttonRight)
+
+    dbg(this.elements.buttonLeft.getBounds())
+    dbg(this.elements.buttonLeft.getTransformedBounds())
+
+    this.elements.buttonLeft.gotoAndStop(0)
+    this.elements.buttonRight.gotoAndStop(1)
+
+    this.stage.update()
 
     this.addButtonsListener()
   }
@@ -111,8 +131,15 @@ export default class VrLayer {
   }
 
   detectButtons () {
-    if (this.elements.buttonLeft && this.elements.buttonRight) {
-
+    if (this.elements.buttonLeft.x < 310 && this.elements.buttonLeft.x > 180 && this.elements.buttonLeft.y < 240 && this.elements.buttonLeft.y > 170) {
+      this.elements.buttonLeft.gotoAndStop(1)
+    } else {
+      this.elements.buttonLeft.gotoAndStop(0)
+    }
+    if (this.elements.buttonRight.x < 310 && this.elements.buttonRight.x > 180 && this.elements.buttonRight.y < 240 && this.elements.buttonRight.y > 170) {
+      this.elements.buttonRight.gotoAndStop(0)
+    } else {
+      this.elements.buttonRight.gotoAndStop(1)
     }
   }
 
@@ -150,10 +177,10 @@ export default class VrLayer {
   showTutorial (src, time, cb) {
     dbg('show tutorial')
     let bitMap = new EaselJS.Bitmap(src)
-    bitMap.x = this.xCenter - 140
-    bitMap.y = this.yCenter - 75
-    bitMap.scaleX = 0.15
-    bitMap.scaleY = 0.15
+    bitMap.x = this.xCenter - 110
+    bitMap.y = this.yCenter - 150
+    bitMap.scaleX = 0.4
+    bitMap.scaleY = 0.4
 
     this.stage.addChild(bitMap)
     setTimeout(() => {
