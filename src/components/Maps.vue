@@ -43,7 +43,7 @@
       }
     },
     ready () {
-//      window.screen.lockOrientation('portrait')
+      window.screen.lockOrientation('portrait')
       TweenMax.staggerFromTo(this.$els.cursor, 0.2, {autoAlpha: 0, y: 10}, {autoAlpha: 1, y: 0})
     },
     methods: {

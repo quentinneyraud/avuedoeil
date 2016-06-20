@@ -21,6 +21,8 @@ export default class VrLayer {
     this.canvas = null
     this.xCenter = null
     this.yCenter = null
+    this.scalePointer = [1, 0.9, 0.8, 0.7, 0.8, 0.9, 1, 1.2, 1.3, 1.2, 1.1, 1]
+    this.scalePointerIndex = 0
     this.elements = {}
 
     this.createCanvas(width, height)
@@ -34,6 +36,7 @@ export default class VrLayer {
         this.animateButtons()
         this.detectButtons()
       }
+      this.stage.addChild(this.elements.pointer)
       this.stage.update(event)
     })
   }
@@ -65,8 +68,6 @@ export default class VrLayer {
       .setStrokeStyle(2)
       .beginStroke('#fff')
       .drawCircle(xCenter, yCenter, POINTER_RADIUS)
-
-    this.stage.addChild(this.elements.pointer)
   }
 
   addButtonsListener () {
@@ -90,7 +91,7 @@ export default class VrLayer {
 
     // First
     let data = {
-      images: ['static/img/vrComponent/boutons.png'],
+      images: ['static/img/vrComponent/bouton_oui.png'],
       frames: {width: 128, height: 70},
       framerate: 10
     }
@@ -100,8 +101,8 @@ export default class VrLayer {
     this.elements.buttonLeft.y = this.buttonLeft.originalY
 
     let data2 = {
-      images: ['static/img/vrComponent/boutons.png'],
-      frames: {width: 128, height: 70},
+      images: ['static/img/vrComponent/bouton_non.png'],
+      frames: {width: 124, height: 70},
       framerate: 10
     }
     let sprite2 = new EaselJS.SpriteSheet(data2)
@@ -112,11 +113,8 @@ export default class VrLayer {
     this.stage.addChild(this.elements.buttonLeft)
     this.stage.addChild(this.elements.buttonRight)
 
-    dbg(this.elements.buttonLeft.getBounds())
-    dbg(this.elements.buttonLeft.getTransformedBounds())
-
     this.elements.buttonLeft.gotoAndStop(0)
-    this.elements.buttonRight.gotoAndStop(1)
+    this.elements.buttonRight.gotoAndStop(0)
 
     this.stage.update()
 
@@ -133,14 +131,31 @@ export default class VrLayer {
   detectButtons () {
     if (this.elements.buttonLeft.x < 310 && this.elements.buttonLeft.x > 180 && this.elements.buttonLeft.y < 240 && this.elements.buttonLeft.y > 170) {
       this.elements.buttonLeft.gotoAndStop(1)
+      this.animatePointer()
     } else {
       this.elements.buttonLeft.gotoAndStop(0)
+      this.addPointer()
     }
     if (this.elements.buttonRight.x < 310 && this.elements.buttonRight.x > 180 && this.elements.buttonRight.y < 240 && this.elements.buttonRight.y > 170) {
-      this.elements.buttonRight.gotoAndStop(0)
-    } else {
       this.elements.buttonRight.gotoAndStop(1)
+      this.animatePointer()
+    } else {
+      this.elements.buttonRight.gotoAndStop(0)
+      this.addPointer()
     }
+  }
+
+  animatePointer () {
+    this.stage.removeChild(this.elements.pointer)
+    this.scalePointerIndex ++
+
+    this.elements.pointer = new EaselJS.Shape()
+    let {xCenter, yCenter} = this
+
+    this.elements.pointer.graphics
+      .setStrokeStyle(2)
+      .beginStroke('#fff')
+      .drawCircle(xCenter, yCenter, POINTER_RADIUS * this.scalePointer[this.scalePointerIndex % this.scalePointer.length])
   }
 
   createVisionEffect () {

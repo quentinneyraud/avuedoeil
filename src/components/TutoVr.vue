@@ -3,7 +3,7 @@
     <img class="tutovrComponent__smartphone" src="../../static/img/tutuvrComponent/smartphone.png" alt="" v-el:smartphone>
     <img class="tutovrComponent__fleche" src="../../static/img/tutuvrComponent/fleche.png" alt="" v-el:fleche>
     <img class="tutovrComponent__cardboard" src="../../static/img/tutuvrComponent/cardboard.png" alt="">
-    <p class="tutovrComponent__instruction">Placer votre smartphone dans les Google Cardboard</p>
+    <a class="tutovrComponent__instruction" v-link="{path: '/vr'}">Démarrer l'expérience</a>
   </div>
 </template>
 
@@ -20,7 +20,7 @@
       }
     },
     ready () {
-//      window.screen.lockOrientation('portrait')
+      window.screen.lockOrientation('portrait')
       TweenMax.set([this.$els.smartphone, this.$els.fleche], {y: '-50%'})
       this.animateCardboard()
     },

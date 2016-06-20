@@ -4,6 +4,7 @@
 .tutovrComponent {
   background: url('../../static/img/metro_bg.png') no-repeat;
   background-size: cover;
+  overflow: hidden;
 
   &__cardboard{
     @include center()
@@ -18,8 +19,9 @@
   }
 
   &__instruction{
-    @include place(80%, 50%);
-    width: 400px;
-    color: $blue;
+    @include place(85%, 50%);
+    padding: 15px;
+    border: 1px solid $blue;
+    color: $blue !important;
   }
 }

@@ -26,7 +26,7 @@
       }
     },
     ready () {
-//      window.screen.lockOrientation('portrait')
+      window.screen.lockOrientation('portrait')
       TweenMax.set([this.$els.title, this.$els.subTitle], {autoAlpha: 0})
       TweenMax.set([this.$els.loader, this.$els.subTitle], {x: '-50%'})
       this.load(this.animate)

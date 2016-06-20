@@ -8,39 +8,39 @@ import MapsComponent from './components/Maps.vue'
 import SocialComponent from './components/Social.vue'
 import TutoVrComponent from './components/TutoVr.vue'
 
-// document.addEventListener('deviceready', () => {
-Vue.use(VueRouter)
+document.addEventListener('deviceready', () => {
+  Vue.use(VueRouter)
 
-let router = new VueRouter({
-  // abstract: true,
-  // hashbang: false
+  let router = new VueRouter({
+    // abstract: true,
+    // hashbang: false
+  })
+
+  router.map({
+    '/': {
+      component: SplashscreenComponent
+    },
+    '/vr': {
+      component: VrComponent
+    },
+    '/tutovr': {
+      component: TutoVrComponent
+    },
+    '/maps': {
+      component: MapsComponent
+    },
+    '/social': {
+      component: SocialComponent
+    }
+  })
+
+  router.beforeEach(() => {
+    window.scrollTo(0, 0)
+  })
+
+  router.redirect({
+    '*': '/'
+  })
+
+  router.start(App, '#app-container')
 })
-
-router.map({
-  '/': {
-    component: SplashscreenComponent
-  },
-  '/vr': {
-    component: VrComponent
-  },
-  '/tutovr': {
-    component: TutoVrComponent
-  },
-  '/maps': {
-    component: MapsComponent
-  },
-  '/social': {
-    component: SocialComponent
-  }
-})
-
-router.beforeEach(() => {
-  window.scrollTo(0, 0)
-})
-
-router.redirect({
-  '*': '/'
-})
-
-router.start(App, '#app-container')
-// })
