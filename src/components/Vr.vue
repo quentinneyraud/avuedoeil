@@ -26,7 +26,7 @@
     height: 100vh;
     z-index: 100;
     &.active{
-       background-color: rgba(255, 255, 255, 0.1);
+       background-color: rgba(255, 255, 255, 0.3);
     }
   }
 </style>

@@ -21,6 +21,8 @@ export default class VrLayer {
     this.canvas = null
     this.xCenter = null
     this.yCenter = null
+    this.buttonLeftHover = false
+    this.buttonRightHover = false
     this.scalePointer = [1, 0.9, 0.8, 0.7, 0.8, 0.9, 1, 1.2, 1.3, 1.2, 1.1, 1]
     this.scalePointerIndex = 0
     this.elements = {}
@@ -132,16 +134,20 @@ export default class VrLayer {
     if (this.elements.buttonLeft.x < 310 && this.elements.buttonLeft.x > 180 && this.elements.buttonLeft.y < 240 && this.elements.buttonLeft.y > 170) {
       this.elements.buttonLeft.gotoAndStop(1)
       this.animatePointer()
-    } else {
+      this.buttonLeftHover = true
+    } else if (this.buttonLeftHover) {
       this.elements.buttonLeft.gotoAndStop(0)
       this.addPointer()
+      this.buttonLeftHover = false
     }
     if (this.elements.buttonRight.x < 310 && this.elements.buttonRight.x > 180 && this.elements.buttonRight.y < 240 && this.elements.buttonRight.y > 170) {
       this.elements.buttonRight.gotoAndStop(1)
       this.animatePointer()
-    } else {
+      this.buttonRightHover = true
+    } else if(this.buttonRightHover) {
       this.elements.buttonRight.gotoAndStop(0)
       this.addPointer()
+      this.buttonRightHover = false
     }
   }
 
@@ -192,7 +198,7 @@ export default class VrLayer {
   showTutorial (src, time, cb) {
     dbg('show tutorial')
     let bitMap = new EaselJS.Bitmap(src)
-    bitMap.x = this.xCenter - 110
+    bitMap.x = this.xCenter - 60
     bitMap.y = this.yCenter - 150
     bitMap.scaleX = 0.4
     bitMap.scaleY = 0.4

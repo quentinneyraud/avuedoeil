@@ -12,7 +12,7 @@ export default class MapExperience {
   begin () {
     dbg('begin')
     this.active = true
-    this.showTutorial()
+    this.showQuestion()
   }
 
   end () {
