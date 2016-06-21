@@ -1,7 +1,8 @@
 <template>
   <div class="vr">
     <div id="webglviewer">
-      <div id="overlay"></div>
+      <div id="overlay">
+      </div>
     </div>
   </div>
 </template>
@@ -25,8 +26,9 @@
     width: 100vw;
     height: 100vh;
     z-index: 100;
+    transition: all 20s;
     &.active{
-       background-color: rgba(255, 255, 255, 0.3);
+       background-color: rgba(255, 255, 255, 0.4);
     }
   }
 </style>

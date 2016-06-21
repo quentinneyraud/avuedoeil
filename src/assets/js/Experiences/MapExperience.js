@@ -12,7 +12,7 @@ export default class MapExperience {
   begin () {
     dbg('begin')
     this.active = true
-    this.showQuestion()
+    this.showTutorial()
   }
 
   end () {
@@ -21,13 +21,13 @@ export default class MapExperience {
 
   showTutorial () {
     dbg('show tutorial')
-    this.vrLayer.showTutorial('static/img/vrComponent/tutoriel_4_1.png', 10000, () => {
-      this.vrLayer.showTutorial('static/img/vrComponent/tutoriel_4_2.png', 10000, () => {
-        this.vrLayer.showTutorial('static/img/vrComponent/tutoriel_4_3.png', 10000, () => {
+    this.vrLayer.showTutorial('static/img/vrComponent/tutoriel_4_1.png', 7000, () => {
+      this.vrLayer.showTutorial('static/img/vrComponent/tutoriel_4_2.png', 7000, () => {
+        this.vrLayer.showTutorial('static/img/vrComponent/tutoriel_4_3.png', 7000, () => {
           document.getElementById('overlay').className = 'active'
           window.setTimeout(() => {
             this.showQuestion()
-          }, 60000)
+          }, 30000)
         })
       })
     })
@@ -35,7 +35,7 @@ export default class MapExperience {
 
   showQuestion () {
     dbg('show question')
-    this.vrLayer.showQuestion('static/img/vrComponent/question4.png', 14036, 6970, 17, 15)
+    this.vrLayer.showQuestion('static/img/vrComponent/q4.png')
     this.vrLayer.createButtons()
   }
 }

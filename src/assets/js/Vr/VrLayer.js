@@ -2,7 +2,7 @@ import debug from 'debug'
 import EaselJS from 'createjs-collection'
 
 const dbg = debug('avuedoeil:vrLayer')
-const SENSIBILITY = 5
+const SENSIBILITY = 3
 // Pointer
 const POINTER_RADIUS = 7
 // Buttons
@@ -21,6 +21,8 @@ export default class VrLayer {
     this.canvas = null
     this.xCenter = null
     this.yCenter = null
+    this.buttonInterval = null
+    this.visionEffect = null
     this.buttonLeftHover = false
     this.buttonRightHover = false
     this.scalePointer = [1, 0.9, 0.8, 0.7, 0.8, 0.9, 1, 1.2, 1.3, 1.2, 1.1, 1]
@@ -36,9 +38,9 @@ export default class VrLayer {
     EaselJS.Ticker.on('tick', (event) => {
       if (this.elements.buttonLeft && this.elements.buttonRight) {
         this.animateButtons()
+        this.animateQuestion()
         this.detectButtons()
       }
-      this.stage.addChild(this.elements.pointer)
       this.stage.update(event)
     })
   }
@@ -70,6 +72,7 @@ export default class VrLayer {
       .setStrokeStyle(2)
       .beginStroke('#fff')
       .drawCircle(xCenter, yCenter, POINTER_RADIUS)
+    this.stage.addChild(this.elements.pointer)
   }
 
   addButtonsListener () {
@@ -79,11 +82,13 @@ export default class VrLayer {
         this.alpha = event.alpha
         this.gamma = event.gamma
       }
-      if (this.elements.buttonLeft && this.elements.buttonRight) {
-        this.elements.buttonLeft.x = this.buttonLeft.originalX + (this.alpha - event.alpha) * -SENSIBILITY
-        this.elements.buttonLeft.y = this.buttonLeft.originalY + (this.gamma - event.gamma) * -SENSIBILITY
+      if (this.elements.buttonLeft && this.elements.buttonRight && this.elements.question) {
+        this.elements.buttonLeft.x = this.buttonLeft.originalX + (this.alpha - event.alpha) * -SENSIBILITY * 1.2
+        this.elements.buttonLeft.y = this.buttonLeft.originalY + (this.gamma - event.gamma) * SENSIBILITY * 1.2
         this.elements.buttonRight.x = this.buttonRight.originalX + (this.alpha - event.alpha) * -SENSIBILITY
-        this.elements.buttonRight.y = this.buttonRight.originalY + (this.gamma - event.gamma) * -SENSIBILITY
+        this.elements.buttonRight.y = this.buttonRight.originalY + (this.gamma - event.gamma) * SENSIBILITY
+        this.elements.question.x = this.question.originalX + (this.alpha - event.alpha) * -SENSIBILITY * 1.1
+        this.elements.question.y = this.question.originalY + (this.gamma - event.gamma) * SENSIBILITY * 1.1
       }
     })
   }
@@ -130,25 +135,42 @@ export default class VrLayer {
     }
   }
 
+  animateQuestion () {
+    if (this.elements.question && this.elements.question > 0) {
+      this.elements.question -= 0.1
+    }
+  }
+
   detectButtons () {
     if (this.elements.buttonLeft.x < 310 && this.elements.buttonLeft.x > 180 && this.elements.buttonLeft.y < 240 && this.elements.buttonLeft.y > 170) {
       this.elements.buttonLeft.gotoAndStop(1)
       this.animatePointer()
       this.buttonLeftHover = true
+      this.buttonInterval = setInterval(() => {
+        this.onButtonValidated()
+      }, 3000)
     } else if (this.buttonLeftHover) {
       this.elements.buttonLeft.gotoAndStop(0)
       this.addPointer()
       this.buttonLeftHover = false
+      clearInterval(this.buttonInterval)
     }
     if (this.elements.buttonRight.x < 310 && this.elements.buttonRight.x > 180 && this.elements.buttonRight.y < 240 && this.elements.buttonRight.y > 170) {
       this.elements.buttonRight.gotoAndStop(1)
       this.animatePointer()
       this.buttonRightHover = true
-    } else if(this.buttonRightHover) {
+    } else if (this.buttonRightHover) {
       this.elements.buttonRight.gotoAndStop(0)
       this.addPointer()
       this.buttonRightHover = false
     }
+  }
+
+  onButtonValidated () {
+    this.stage.removeChild(this.elements.buttonLeft)
+    this.stage.removeChild(this.elements.buttonRight)
+    this.stage.removeChild(this.elements.question)
+    document.getElementById('overlay').className = ''
   }
 
   animatePointer () {
@@ -162,44 +184,41 @@ export default class VrLayer {
       .setStrokeStyle(2)
       .beginStroke('#fff')
       .drawCircle(xCenter, yCenter, POINTER_RADIUS * this.scalePointer[this.scalePointerIndex % this.scalePointer.length])
+
+    this.stage.addChild(this.elements.pointer)
   }
 
   createVisionEffect () {
-    let circle = new EaselJS.Shape()
+    this.visionEffect = new EaselJS.Shape()
     let {xCenter, yCenter} = this
 
-    circle.graphics
+    this.visionEffect.graphics
       .setStrokeStyle(400)
       .beginRadialGradientStroke(['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.9)'], [0, 0.3], xCenter, yCenter, 70, xCenter, yCenter, 340)
       .drawCircle(xCenter, yCenter, 100)
 
-    this.stage.addChild(circle)
-    this.stage.setChildIndex(circle, this.stage.getNumChildren() - 1)
+    this.stage.addChild(this.visionEffect)
   }
 
-  showQuestion (spriteSrc, width, height, columns, lines) {
-    let {xCenter, yCenter} = this
-    let data = {
-      images: [spriteSrc],
-      frames: {width: width / columns, height: height / lines},
-      framerate: 10
+  showQuestion (src) {
+    this.question = {
+      originalX: this.xCenter - 350,
+      originalY: this.yCenter - 200
     }
-    let sprite = new EaselJS.SpriteSheet(data)
-    let animation = new EaselJS.Sprite(sprite)
-    animation.x = xCenter - 200
-    animation.y = yCenter - 100
-    animation.scaleX = 0.5
-    animation.scaleY = 0.5
+    this.elements.question = new EaselJS.Bitmap(src)
+    this.elements.question.x = this.question.originalX
+    this.elements.question.y = this.question.originalY
+    this.elements.question.scaleX = 0.4
+    this.elements.question.scaleY = 0.4
 
-    this.stage.addChild(animation)
-    animation.gotoAndPlay(1)
+    this.stage.addChild(this.elements.question)
   }
 
   showTutorial (src, time, cb) {
     dbg('show tutorial')
     let bitMap = new EaselJS.Bitmap(src)
-    bitMap.x = this.xCenter - 60
-    bitMap.y = this.yCenter - 150
+    bitMap.x = this.xCenter - 100
+    bitMap.y = this.yCenter - 120
     bitMap.scaleX = 0.4
     bitMap.scaleY = 0.4
 
